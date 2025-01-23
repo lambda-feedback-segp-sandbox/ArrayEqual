@@ -153,5 +153,24 @@ class TestEvaluationFunction(unittest.TestCase):
         self.assertEqual(response.get("is_correct"), False)
         self.assertEqual(response["feedback"], "Only numbers are permitted.")
 
+    def test_response_array_too_small(self):
+        response = [1]
+        answer = [1, 1]
+
+        response = evaluation_function(response, answer, {"feedback_for_incorrect_response": "Custom feedback"})
+
+        self.assertEqual(response.get("is_correct"), False)
+        self.assertEqual(response["feedback"], "Custom feedback")
+
+    def test_response_array_too_large(self):
+        response = [1, 1]
+        answer = [1]
+
+        response = evaluation_function(response, answer, {"feedback_for_incorrect_response": "Custom feedback"})
+
+        self.assertEqual(response.get("is_correct"), False)
+        self.assertEqual(response["feedback"], "Custom feedback")
+
+
 if __name__ == "__main__":
     unittest.main()

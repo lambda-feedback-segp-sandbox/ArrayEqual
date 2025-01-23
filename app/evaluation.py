@@ -61,6 +61,13 @@ def evaluation_function(response, answer, params) -> dict:
             detail=repr(e)
         )
 
+    # Compare expected and provided numbers of elements.
+    if ans.shape != res.shape:
+        return {
+            "is_correct": False,
+            "feedback": params["feedback_for_incorrect_response"]
+        }
+
     rtol = params.get("rtol", 0)
     atol = params.get("atol", 0)
 
